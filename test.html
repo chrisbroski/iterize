@@ -92,7 +92,7 @@ function isEqualTo(a1, a2) {
 
 function runTests() {
     var testResults = document.querySelector("dl"),
-        noneFailed = true,
+        allPassing = true,
         test,
         result;
 
@@ -117,12 +117,12 @@ function runTests() {
             result.className = "passed";
         } else {
             result.className = "failed";
-            noneFailed = false;
+            allPassing = false;
         }
         testResults.appendChild(result);
     });
 
-    if (noneFailed) {
+    if (allPassing) {
         document.getElementById("overallResult").className = "passed";
         document.getElementById("overallResult").textContent = "Passed";
     } else {
