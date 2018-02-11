@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<title>Iterize Test</title>
+<style>
+* {box-sizing: border-box; }
+html {padding: 10px 10px 200px; font-family: droid sans, sans-serif; }
+body {margin: 0 auto; max-width: 580px; }
+h1 {font-size: 36px; }
+p, h5, input, button {line-height: 1.4em; font-size: 17px; }
+
+dl {
+    margin: 0; padding: 1em;
+    font-family: monospace;
+    background: #efefef;
+}
+dd {
+    margin: 0 0 1em 0;
+}
+
+.passed {
+    color: green;
+}
+.failed {
+    color: red;
+}
+</style>
+
+<body>
+
+<article>
+<h1>Tests for Iterize Function</h1>
+
+<p><button>Run tests</button> <span id="overallResult"></span></p>
+
+<dl></dl>
+</article>
+
+<script src="iterize.js"></script>
+<script>
+var tests = [
+    // defaults to empty sting
+    ["", []],
+    [undefined, []],
+    [null, []],
+    [NaN, []],
+
+    // single integers
+    [5, [0, 1, 2, 3, 4]],
+    ["5", [0, 1, 2, 3, 4]],
+    [-4, [0, -1, -2, -3]],
+
+    // range
+    ["1...5", [1, 2, 3, 4, 5]],
+    ["1...-5", [1, 0, -1, -2, -3, -4, -5]],
+    ["-1...-5", [-1, -2, -3, -4, -5]],
+    ["-1...5", [-1, 0, 1, 2, 3, 4, 5]],
+
+    // range with step not 1
+    ["0, 3...12", [0, 3, 6, 9, 12]],
+    ["5...5", [5]],
+    ["5...4", [5, 4]],
+    ["10, 8 ... -2", [10, 8, 6, 4, 2, 0, -2]],
+    ["1, 3 ... -10", "exception"],
+    ["1,-1...3", "exception"],
+    ["1,5...3", [1]],
+    ["5,2...4", [5]],
+
+    // garbage
+    [0, "exception"],
+    ["0", "exception"],
+    [{}, "exception"],
+    [[], "exception"],
+    [function () {}, "exception"],
+    ["wtf", "exception"],
+    [Infinity, "exception"],
+
+    // text iterators
+    ["q...z", ["q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]],
+    ["A...C", ["A", "B", "C"]],
+    ["Y...b", ["Y", "Z", "[", "\\", "]", "^", "_", "`", "a", "b"]],
+    ["α...λ", ["α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "ι", "κ", "λ"]],
+    ["z,y...q", ["z", "y", "x", "w", "v", "u", "t", "s", "r", "q"]],
+    ["a,c...z", ["a", "c", "e", "g", "i", "k", "m", "o", "q", "s", "u", "w", "y"]]
+];
+
+function isEqualTo(a1, a2) {
+    return JSON.stringify(a1) === JSON.stringify(a2);
+}
+
+function runTests() {
+    var testResults = document.querySelector("dl"),
+        noneFailed = true,
+        test,
+        result;
+
+    tests.forEach(function (t) {
+        var testResult,
+            str = (typeof t[0] === "string") ? '"' : "",
+            test = document.createElement("dt"),
+            result = document.createElement("dd");
+
+        test.textContent = str + t[0] + str;
+        testResults.appendChild(test);
+
+        try {
+            testResult = iterize(t[0]);
+            result.textContent = JSON.stringify(testResult);
+        } catch(e) {
+            result.textContent = "Exception: " + e;
+            testResult = "exception";
+        }
+
+        if (isEqualTo(testResult, t[1])) {
+            result.className = "passed";
+        } else {
+            result.className = "failed";
+            noneFailed = false;
+        }
+        testResults.appendChild(result);
+    });
+
+    if (noneFailed) {
+        document.getElementById("overallResult").className = "passed";
+        document.getElementById("overallResult").textContent = "Passed";
+    } else {
+        document.getElementById("overallResult").className = "failed";
+        document.getElementById("overallResult").textContent = "Failed";
+    }
+}
+
+document.querySelector("button").onclick = runTests;
+</script>
