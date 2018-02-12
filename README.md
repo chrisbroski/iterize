@@ -62,7 +62,7 @@ If you want to increment by a value other than one, demonstrate with the first i
 > [10, 9, 8, 7, 6, 5, 4]
 >
 > iterize("-11, -3...13")
-> [-11, -33, 5, 13]
+> [-11, -3, 5, 13]
 ```
 
 Single characters can also be used. It will increment them based on their numeric code value.
