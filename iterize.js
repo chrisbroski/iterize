@@ -59,7 +59,7 @@ function iterize(definition) {
 
         // Accept single integer argument
         if (def === 0) {
-            throw "iterize description, if a single integer, must be non-zero.";
+            throw "iterize description, if an integer, must be non-zero.";
         }
         if (Number.isInteger(def)) {
             return true;
@@ -67,7 +67,7 @@ function iterize(definition) {
 
         // If it isn't an integer, it better be a string
         if (typeof def !== 'string') {
-            throw "iterize description must be a string or single integer.";
+            throw "iterize description must be a string or integer.";
         }
 
         // Remove spaces
@@ -75,7 +75,7 @@ function iterize(definition) {
 
         // A single non-zero integer string is also OK
         if (def === "0") {
-            throw "iterize description, if a single integer, must be non-zero.";
+            throw "iterize description, if an integer, must be non-zero.";
         }
         if (isStringInteger(def)) {
             return true;

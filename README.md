@@ -2,6 +2,20 @@
 
 Creates an iterable array from simple descriptive text
 
+```
+> iterize(5);
+> [0, 1, 2, 3, 4]
+>
+> iterize("1...5")
+> [1, 2, 3, 4, 5]
+>
+> iterize("10, 9...4")
+> [10, 9, 8, 7, 6, 5, 4]
+>
+> iterize("A...C");
+> ["A", "B", "C"]
+```
+
 ## Why?
 
 I hate *for* loops. They are ugly. They require defining temporary variables with messy and confusing scope. Their existence triggers a warning in JSLint, and I don't blame it at all. With wise use of array methods, there is very little need for these archaic constructs in modern JavaScript. Except sometimes I just need to do 1,000 of something and there aren't any native ways to loop through an arbitrary amount.
@@ -20,7 +34,7 @@ I believe that code is primarily meant to be read by humans. The syntax should b
 
 ### Powerful
 
-This little language should be able to create most any type of array that can be reasonably used for iteration.
+This little language should be able to create most any type of array that could reasonably be useful for iteration.
 
 ### Examples
 
