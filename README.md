@@ -1,6 +1,6 @@
 # iterize
 
-Creates an iterable array from simple descriptive text
+Create an array from simple descriptive text
 
 ```
 > iterize(5);
