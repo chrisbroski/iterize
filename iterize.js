@@ -59,7 +59,7 @@ function iterize(definition) {
 
         // Accept single integer argument
         if (def === 0) {
-            throw "iterize description, if an integer, must be non-zero.";
+            throw new Error("iterize description, if an integer, must be non-zero.");
         }
         if (Number.isInteger(def)) {
             return true;
@@ -67,7 +67,7 @@ function iterize(definition) {
 
         // If it isn't an integer, it better be a string
         if (typeof def !== 'string') {
-            throw "iterize description must be a string or integer.";
+            throw new Error("iterize description must be a string or integer.");
         }
 
         // Remove spaces
@@ -75,7 +75,7 @@ function iterize(definition) {
 
         // A single non-zero integer string is also OK
         if (def === "0") {
-            throw "iterize description, if an integer, must be non-zero.";
+            throw new Error("iterize description, if an integer, must be non-zero.");
         }
         if (isStringInteger(def)) {
             return true;
@@ -86,7 +86,7 @@ function iterize(definition) {
             return true;
         }
 
-        throw "iterize description string invalid.";
+        throw new Error("iterize description string invalid.");
     }
 
     function extractParams(def, character) {
@@ -109,10 +109,10 @@ function iterize(definition) {
 
             // do the three make sense?
             if (step > 1 && end < start) {
-                throw "iterize step does not approach end.";
+                throw new Error("iterize step does not approach end.");
             }
             if (step < 1 && end > start) {
-                throw "iterize step does not approach end.";
+                throw new Error("iterize step does not approach end.");
             }
         }
 
